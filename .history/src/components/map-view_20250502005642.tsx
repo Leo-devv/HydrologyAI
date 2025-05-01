@@ -15,16 +15,19 @@ export default function WaterAnalyticsView({ date, compareDate }: WaterAnalytics
   
   // Water level data
   const currentLevel = 7300 // 2025 level
-  const maxLevel = 7400    // Adjusted max level
-  const minLevel = 7000    // Minimum scale for predictions
+  const maxLevel = 7800    // 2020 level
+  const minLevel = 7000    // Adjusted minimum scale for predictions
   const percentageFull = ((currentLevel - minLevel) / (maxLevel - minLevel)) * 100
   
-  // Current and AI predicted data
+  // Historical and AI predicted data
   const yearData = [
-    { year: 2025, level: 7300, change: "Current", type: "current" },
-    { year: 2026, level: 7200, change: "-1.4%", type: "prediction" },
-    { year: 2027, level: 7100, change: "-2.7%", type: "prediction" },
-    { year: 2028, level: 7050, change: "-3.4%", type: "prediction" },
+    { year: 2020, level: 7800, change: "Baseline", type: "historical" },
+    { year: 2022, level: 7600, change: "-2.6%", type: "historical" },
+    { year: 2024, level: 7400, change: "-5.1%", type: "historical" },
+    { year: 2025, level: 7300, change: "-6.4%", type: "historical" },
+    { year: 2026, level: 7200, change: "-7.7%", type: "prediction" },
+    { year: 2027, level: 7100, change: "-9.0%", type: "prediction" },
+    { year: 2028, level: 7050, change: "-9.6%", type: "prediction" },
   ]
 
   // Reduced to three key seasons for better visibility
@@ -97,7 +100,7 @@ export default function WaterAnalyticsView({ date, compareDate }: WaterAnalytics
                         
                         {/* Scale Lines */}
                         <div className="absolute inset-y-4 left-2 flex flex-col justify-between">
-                          {[7400, 7300, 7200, 7100, 7000].map((level) => (
+                          {[7800, 7600, 7400, 7200].map((level) => (
                             <div key={level} className="flex items-center gap-1">
                               <div className="w-2 h-0.5 bg-blue-300"></div>
                               <span className="text-[10px] text-blue-600">{level}</span>
@@ -128,7 +131,7 @@ export default function WaterAnalyticsView({ date, compareDate }: WaterAnalytics
                         <div className="w-24 flex items-center gap-2">
                           {data.type === 'prediction' && <Brain className="h-4 w-4 text-purple-500" />}
                           <span className={`text-base ${
-                            data.type === 'current' ? "text-blue-600" :
+                            data.change === "Baseline" ? "text-blue-600" :
                             data.type === 'prediction' ? "text-purple-600" : "text-red-500"
                           }`}>
                             {data.change}
@@ -278,14 +281,15 @@ export default function WaterAnalyticsView({ date, compareDate }: WaterAnalytics
       <div className="flex items-center justify-between px-6 py-3 bg-white rounded-lg shadow-sm">
         <div className="flex items-center gap-3">
           <Droplets className="h-5 w-5 text-blue-500" />
-          <span className="text-base font-medium">Current Level (2025):</span>
+          <span className="text-base font-medium">Current Status:</span>
           <div className="flex items-center gap-2">
-            <span className="text-base text-blue-600">7,300 km²</span>
+            <ChevronDown className="h-5 w-5 text-red-500" />
+            <span className="text-base text-red-500">Declining</span>
           </div>
         </div>
         <div className="flex items-center gap-2 text-base">
           <Brain className="h-4 w-4 text-purple-500" />
-          <span className="text-purple-600">AI Model: -3.4% by 2028</span>
+          <span className="text-purple-600">AI Prediction 2026: 7,200 km²</span>
         </div>
       </div>
     </div>
