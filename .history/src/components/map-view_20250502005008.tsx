@@ -19,33 +19,37 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
   const minLevel = 7200    // Minimum scale
   const percentageFull = ((currentLevel - minLevel) / (maxLevel - minLevel)) * 100
   
-  // Reduced year data to show fewer entries that fit well
+  // Year data for comparison
   const yearData = [
     { year: 2020, level: 7800, change: "Baseline" },
+    { year: 2021, level: 7700, change: "-1.3%" },
     { year: 2022, level: 7600, change: "-2.6%" },
+    { year: 2023, level: 7500, change: "-3.8%" },
     { year: 2024, level: 7400, change: "-5.1%" },
     { year: 2025, level: 7300, change: "-6.4%" },
   ]
 
-  // Reduced to three key seasons for better visibility
-  const seasonalTrends = [
-    { season: "Spring", change: "+2.3%", status: "increase" },
-    { season: "Summer", change: "-1.8%", status: "decrease" },
-    { season: "Winter", change: "-2.4%", status: "decrease" },
-  ]
-
-  // Focused on three most important metrics
+  // Quality metrics
   const qualityMetrics = [
+    { name: "Clarity", value: 85, status: "good", trend: "stable" },
     { name: "Oxygen Levels", value: 92, status: "good", trend: "improving" },
     { name: "pH Balance", value: 72, status: "warning", trend: "declining" },
     { name: "Temperature", value: 88, status: "good", trend: "stable" },
   ]
 
+  // Seasonal trends
+  const seasonalTrends = [
+    { season: "Spring", change: "+2.3%", status: "increase" },
+    { season: "Summer", change: "-1.8%", status: "decrease" },
+    { season: "Autumn", change: "-3.2%", status: "decrease" },
+    { season: "Winter", change: "-2.4%", status: "decrease" },
+  ]
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 w-full">
-          <Tabs defaultValue="levels" className="w-full" onValueChange={setActiveView}>
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Tabs defaultValue="levels" className="w-[300px]" onValueChange={setActiveView}>
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="levels">
                 <Waves className="mr-2 h-4 w-4" />
@@ -61,9 +65,10 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="levels" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-gradient-to-br from-blue-50 via-white to-blue-50 border perspective">
+            <TabsContent value="levels">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 3D Water Tank */}
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-gradient-to-br from-blue-50 via-white to-blue-50 border perspective">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative w-48 h-64 transform-style-3d rotate-y-[-20deg] rotate-x-[10deg]">
                       {/* Tank Container */}
@@ -108,13 +113,15 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                     </div>
                   </div>
                 </div>
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Historical Comparison</div>
-                  <div className="space-y-12">
+
+                {/* Year Comparison */}
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="text-sm font-medium text-gray-600 mb-3">Historical Comparison</div>
+                  <div className="space-y-3">
                     {yearData.map((data) => (
-                      <div key={data.year} className="flex items-center gap-6">
-                        <div className="w-16 text-base font-medium">{data.year}</div>
-                        <div className="flex-1 h-10 bg-blue-50 rounded-full overflow-hidden">
+                      <div key={data.year} className="flex items-center gap-4">
+                        <div className="w-12 text-sm font-medium">{data.year}</div>
+                        <div className="flex-1 h-8 bg-blue-50 rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-blue-500 rounded-full transition-all duration-500"
                             style={{ 
@@ -123,7 +130,7 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                             }}
                           />
                         </div>
-                        <div className="w-20 text-base text-right">
+                        <div className="w-16 text-sm text-right">
                           {data.change === "Baseline" ? (
                             <span className="text-blue-600">{data.change}</span>
                           ) : (
@@ -137,23 +144,23 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="trends" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TabsContent value="trends">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Seasonal Changes */}
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Seasonal Variations</div>
-                  <div className="space-y-12">
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="text-sm font-medium text-gray-600 mb-4">Seasonal Variations</div>
+                  <div className="space-y-6">
                     {seasonalTrends.map((season) => (
                       <div key={season.season} className="relative">
-                        <div className="flex justify-between mb-3">
-                          <span className="text-base font-medium">{season.season}</span>
-                          <span className={`text-base font-medium ${
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">{season.season}</span>
+                          <span className={`text-sm font-medium ${
                             season.status === 'increase' ? 'text-green-600' : 'text-red-500'
                           }`}>
                             {season.change}
                           </span>
                         </div>
-                        <div className="h-4 bg-blue-100 rounded-full overflow-hidden">
+                        <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                           <div 
                             className={`h-full rounded-full transition-all duration-500 ${
                               season.status === 'increase' ? 'bg-green-500' : 'bg-red-500'
@@ -169,53 +176,60 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                   </div>
                 </div>
 
-                {/* Key Indicators */}
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Key Indicators</div>
-                  <div className="space-y-8">
-                    <div className="bg-red-50 p-4 rounded-lg">
-                      <div className="flex items-center gap-3 text-red-700 mb-3">
-                        <AlertTriangle className="h-5 w-5" />
-                        <span className="font-medium text-base">Critical Period</span>
+                {/* Monthly Trend Analysis */}
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="text-sm font-medium text-gray-600 mb-4">Key Indicators</div>
+                  <div className="space-y-4">
+                    <div className="bg-red-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-red-700 mb-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        <span className="font-medium">Critical Decline Periods</span>
                       </div>
-                      <p className="text-base text-red-600">July-September decline pattern</p>
+                      <p className="text-sm text-red-600">July-September shows consistent decline pattern</p>
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <div className="flex items-center gap-3 text-blue-700 mb-3">
-                        <Droplets className="h-5 w-5" />
-                        <span className="font-medium text-base">Annual Change</span>
+                    <div className="bg-amber-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-amber-700 mb-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        <span className="font-medium">Recovery Periods</span>
                       </div>
-                      <p className="text-base text-blue-600">Yearly decline: ~100 km²</p>
+                      <p className="text-sm text-amber-600">Minor recovery during spring months</p>
+                    </div>
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-blue-700 mb-2">
+                        <Droplets className="h-4 w-4" />
+                        <span className="font-medium">Annual Pattern</span>
+                      </div>
+                      <p className="text-sm text-blue-600">Consistent yearly decline of ~100 km²</p>
                     </div>
                   </div>
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="quality" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TabsContent value="quality">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Quality Metrics */}
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Water Quality Metrics</div>
-                  <div className="space-y-12">
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="text-sm font-medium text-gray-600 mb-4">Water Quality Metrics</div>
+                  <div className="space-y-6">
                     {qualityMetrics.map((metric) => (
                       <div key={metric.name} className="relative">
-                        <div className="flex justify-between mb-3">
-                          <span className="text-base font-medium">{metric.name}</span>
-                          <div className="flex items-center gap-3">
-                            <span className={`text-base font-medium ${
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">{metric.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`text-sm font-medium ${
                               metric.status === 'good' ? 'text-green-600' : 'text-amber-600'
                             }`}>
                               {metric.value}%
                             </span>
                             {metric.status === 'good' ? (
-                              <CheckCircle2 className="h-5 w-5 text-green-500" />
+                              <CheckCircle2 className="h-4 w-4 text-green-500" />
                             ) : (
-                              <AlertTriangle className="h-5 w-5 text-amber-500" />
+                              <AlertTriangle className="h-4 w-4 text-amber-500" />
                             )}
                           </div>
                         </div>
-                        <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                           <div 
                             className={`h-full rounded-full transition-all duration-500 ${
                               metric.status === 'good' ? 'bg-green-500' : 'bg-amber-500'
@@ -223,8 +237,8 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                             style={{ width: `${metric.value}%`, opacity: 0.7 }}
                           />
                         </div>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span className={`text-sm ${
+                        <div className="mt-1 flex items-center gap-1">
+                          <span className={`text-xs ${
                             metric.trend === 'improving' ? 'text-green-600' : 
                             metric.trend === 'declining' ? 'text-red-500' : 'text-blue-600'
                           }`}>
@@ -239,27 +253,29 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                 </div>
 
                 {/* Quality Impact Analysis */}
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Quality Impact Analysis</div>
-                  <div className="space-y-8">
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <div className="flex items-center gap-3 text-green-700 mb-3">
-                        <CheckCircle2 className="h-5 w-5" />
-                        <span className="font-medium text-base">Good Indicators</span>
+                <div className="relative h-[300px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="text-sm font-medium text-gray-600 mb-4">Quality Impact Analysis</div>
+                  <div className="space-y-4">
+                    <div className="bg-green-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-green-700 mb-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span className="font-medium">Positive Indicators</span>
                       </div>
-                      <ul className="text-base text-green-600 list-disc pl-6 space-y-3">
-                        <li>High oxygen saturation</li>
-                        <li>Stable temperature</li>
+                      <ul className="text-sm text-green-600 list-disc pl-5 space-y-1">
+                        <li>High oxygen saturation levels</li>
+                        <li>Good water clarity maintained</li>
+                        <li>Stable temperature ranges</li>
                       </ul>
                     </div>
-                    <div className="bg-amber-50 p-4 rounded-lg">
-                      <div className="flex items-center gap-3 text-amber-700 mb-3">
-                        <AlertTriangle className="h-5 w-5" />
-                        <span className="font-medium text-base">Watch Points</span>
+                    <div className="bg-amber-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-amber-700 mb-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        <span className="font-medium">Areas of Concern</span>
                       </div>
-                      <ul className="text-base text-amber-600 list-disc pl-6 space-y-3">
-                        <li>pH level variations</li>
-                        <li>Seasonal changes</li>
+                      <ul className="text-sm text-amber-600 list-disc pl-5 space-y-1">
+                        <li>pH levels showing slight variation</li>
+                        <li>Seasonal algae growth detected</li>
+                        <li>Monitoring turbidity changes</li>
                       </ul>
                     </div>
                   </div>
@@ -271,16 +287,16 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
       </div>
 
       {/* Status Bar */}
-      <div className="flex items-center justify-between px-6 py-3 bg-white rounded-lg shadow-sm">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between px-4 py-2 bg-white rounded-lg shadow-sm">
+        <div className="flex items-center gap-2">
           <Droplets className="h-5 w-5 text-blue-500" />
-          <span className="text-base font-medium">Current Status:</span>
-          <div className="flex items-center gap-2">
-            <ChevronDown className="h-5 w-5 text-red-500" />
-            <span className="text-base text-red-500">Declining</span>
+          <span className="text-sm font-medium">Current Status:</span>
+          <div className="flex items-center gap-1">
+            <ChevronDown className="h-4 w-4 text-red-500" />
+            <span className="text-sm text-red-500">Declining</span>
           </div>
         </div>
-        <div className="text-base text-gray-500">
+        <div className="text-sm text-gray-500">
           Projected 2025: 7,300 km²
         </div>
       </div>

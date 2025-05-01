@@ -19,26 +19,30 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
   const minLevel = 7200    // Minimum scale
   const percentageFull = ((currentLevel - minLevel) / (maxLevel - minLevel)) * 100
   
-  // Reduced year data to show fewer entries that fit well
+  // Year data for comparison
   const yearData = [
     { year: 2020, level: 7800, change: "Baseline" },
+    { year: 2021, level: 7700, change: "-1.3%" },
     { year: 2022, level: 7600, change: "-2.6%" },
+    { year: 2023, level: 7500, change: "-3.8%" },
     { year: 2024, level: 7400, change: "-5.1%" },
     { year: 2025, level: 7300, change: "-6.4%" },
   ]
 
-  // Reduced to three key seasons for better visibility
-  const seasonalTrends = [
-    { season: "Spring", change: "+2.3%", status: "increase" },
-    { season: "Summer", change: "-1.8%", status: "decrease" },
-    { season: "Winter", change: "-2.4%", status: "decrease" },
-  ]
-
-  // Focused on three most important metrics
+  // Quality metrics
   const qualityMetrics = [
+    { name: "Clarity", value: 85, status: "good", trend: "stable" },
     { name: "Oxygen Levels", value: 92, status: "good", trend: "improving" },
     { name: "pH Balance", value: 72, status: "warning", trend: "declining" },
     { name: "Temperature", value: 88, status: "good", trend: "stable" },
+  ]
+
+  // Seasonal trends
+  const seasonalTrends = [
+    { season: "Spring", change: "+2.3%", status: "increase" },
+    { season: "Summer", change: "-1.8%", status: "decrease" },
+    { season: "Autumn", change: "-3.2%", status: "decrease" },
+    { season: "Winter", change: "-2.4%", status: "decrease" },
   ]
 
   return (
@@ -109,12 +113,12 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                   </div>
                 </div>
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Historical Comparison</div>
-                  <div className="space-y-12">
+                  <div className="text-base font-medium text-gray-600 mb-6">Historical Comparison</div>
+                  <div className="space-y-8">
                     {yearData.map((data) => (
                       <div key={data.year} className="flex items-center gap-6">
                         <div className="w-16 text-base font-medium">{data.year}</div>
-                        <div className="flex-1 h-10 bg-blue-50 rounded-full overflow-hidden">
+                        <div className="flex-1 h-12 bg-blue-50 rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-blue-500 rounded-full transition-all duration-500"
                             style={{ 
@@ -141,11 +145,11 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Seasonal Changes */}
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Seasonal Variations</div>
-                  <div className="space-y-12">
+                  <div className="text-base font-medium text-gray-600 mb-6">Seasonal Variations</div>
+                  <div className="space-y-8">
                     {seasonalTrends.map((season) => (
                       <div key={season.season} className="relative">
-                        <div className="flex justify-between mb-3">
+                        <div className="flex justify-between mb-2">
                           <span className="text-base font-medium">{season.season}</span>
                           <span className={`text-base font-medium ${
                             season.status === 'increase' ? 'text-green-600' : 'text-red-500'
@@ -153,7 +157,7 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                             {season.change}
                           </span>
                         </div>
-                        <div className="h-4 bg-blue-100 rounded-full overflow-hidden">
+                        <div className="h-3 bg-blue-100 rounded-full overflow-hidden">
                           <div 
                             className={`h-full rounded-full transition-all duration-500 ${
                               season.status === 'increase' ? 'bg-green-500' : 'bg-red-500'
@@ -169,23 +173,30 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                   </div>
                 </div>
 
-                {/* Key Indicators */}
+                {/* Monthly Trend Analysis */}
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Key Indicators</div>
-                  <div className="space-y-8">
+                  <div className="text-base font-medium text-gray-600 mb-6">Key Indicators</div>
+                  <div className="space-y-6">
                     <div className="bg-red-50 p-4 rounded-lg">
                       <div className="flex items-center gap-3 text-red-700 mb-3">
                         <AlertTriangle className="h-5 w-5" />
-                        <span className="font-medium text-base">Critical Period</span>
+                        <span className="font-medium text-base">Critical Decline Periods</span>
                       </div>
-                      <p className="text-base text-red-600">July-September decline pattern</p>
+                      <p className="text-base text-red-600">July-September shows consistent decline pattern</p>
+                    </div>
+                    <div className="bg-amber-50 p-4 rounded-lg">
+                      <div className="flex items-center gap-3 text-amber-700 mb-3">
+                        <AlertTriangle className="h-5 w-5" />
+                        <span className="font-medium text-base">Recovery Periods</span>
+                      </div>
+                      <p className="text-base text-amber-600">Minor recovery during spring months</p>
                     </div>
                     <div className="bg-blue-50 p-4 rounded-lg">
                       <div className="flex items-center gap-3 text-blue-700 mb-3">
                         <Droplets className="h-5 w-5" />
-                        <span className="font-medium text-base">Annual Change</span>
+                        <span className="font-medium text-base">Annual Pattern</span>
                       </div>
-                      <p className="text-base text-blue-600">Yearly decline: ~100 km²</p>
+                      <p className="text-base text-blue-600">Consistent yearly decline of ~100 km²</p>
                     </div>
                   </div>
                 </div>
@@ -196,11 +207,11 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Quality Metrics */}
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Water Quality Metrics</div>
-                  <div className="space-y-12">
+                  <div className="text-base font-medium text-gray-600 mb-6">Water Quality Metrics</div>
+                  <div className="space-y-8">
                     {qualityMetrics.map((metric) => (
                       <div key={metric.name} className="relative">
-                        <div className="flex justify-between mb-3">
+                        <div className="flex justify-between mb-2">
                           <span className="text-base font-medium">{metric.name}</span>
                           <div className="flex items-center gap-3">
                             <span className={`text-base font-medium ${
@@ -215,7 +226,7 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
                             )}
                           </div>
                         </div>
-                        <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                           <div 
                             className={`h-full rounded-full transition-all duration-500 ${
                               metric.status === 'good' ? 'bg-green-500' : 'bg-amber-500'
@@ -240,26 +251,28 @@ export default function WaterLevelView({ date, compareDate }: WaterLevelProps) {
 
                 {/* Quality Impact Analysis */}
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-base font-medium text-gray-600 mb-8">Quality Impact Analysis</div>
-                  <div className="space-y-8">
+                  <div className="text-base font-medium text-gray-600 mb-6">Quality Impact Analysis</div>
+                  <div className="space-y-6">
                     <div className="bg-green-50 p-4 rounded-lg">
                       <div className="flex items-center gap-3 text-green-700 mb-3">
                         <CheckCircle2 className="h-5 w-5" />
-                        <span className="font-medium text-base">Good Indicators</span>
+                        <span className="font-medium text-base">Positive Indicators</span>
                       </div>
-                      <ul className="text-base text-green-600 list-disc pl-6 space-y-3">
-                        <li>High oxygen saturation</li>
-                        <li>Stable temperature</li>
+                      <ul className="text-base text-green-600 list-disc pl-6 space-y-2">
+                        <li>High oxygen saturation levels</li>
+                        <li>Good water clarity maintained</li>
+                        <li>Stable temperature ranges</li>
                       </ul>
                     </div>
                     <div className="bg-amber-50 p-4 rounded-lg">
                       <div className="flex items-center gap-3 text-amber-700 mb-3">
                         <AlertTriangle className="h-5 w-5" />
-                        <span className="font-medium text-base">Watch Points</span>
+                        <span className="font-medium text-base">Areas of Concern</span>
                       </div>
-                      <ul className="text-base text-amber-600 list-disc pl-6 space-y-3">
-                        <li>pH level variations</li>
-                        <li>Seasonal changes</li>
+                      <ul className="text-base text-amber-600 list-disc pl-6 space-y-2">
+                        <li>pH levels showing slight variation</li>
+                        <li>Seasonal algae growth detected</li>
+                        <li>Monitoring turbidity changes</li>
                       </ul>
                     </div>
                   </div>
