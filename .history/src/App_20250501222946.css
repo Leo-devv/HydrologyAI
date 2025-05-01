@@ -1135,7 +1135,7 @@ button {
 }
 
 .processing-steps::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 12px;
   left: 0;
