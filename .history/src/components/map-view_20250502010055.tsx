@@ -2,16 +2,13 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Droplets, ArrowUpDown, Waves, Gauge, ChevronUp, ChevronDown, AlertTriangle, CheckCircle2, Brain, Satellite, SplitSquareHorizontal, Layers } from "lucide-react"
+import { Droplets, ArrowUpDown, Waves, Gauge, ChevronUp, ChevronDown, AlertTriangle, CheckCircle2, Brain, Satellite } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Slider } from "@/components/ui/slider"
 
 interface WaterAnalyticsProps {}
 
 export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
   const [activeView, setActiveView] = useState("levels")
-  const [comparisonMode, setComparisonMode] = useState<'slider' | 'sideBySide' | 'overlay'>('slider')
-  const [overlayOpacity, setOverlayOpacity] = useState(50)
   
   // Water level data
   const currentLevel = 7300 // 2025 level
@@ -30,10 +27,6 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
   // Satellite analysis data
   const satelliteAnalysis = {
     location: "Masuria Lake District",
-    dates: {
-      before: "August 15th, 2018",
-      after: "August 15th, 2023"
-    },
     keyFindings: [
       { title: "Shoreline Changes", detail: "2.1km reduction in shoreline perimeter", status: "warning" },
       { title: "Vegetation Cover", detail: "15% decrease in aquatic vegetation", status: "alert" },
@@ -54,95 +47,6 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
     { name: "pH Balance", value: 72, status: "warning", trend: "declining" },
     { name: "Temperature", value: 88, status: "good", trend: "stable" },
   ]
-
-  const renderSatelliteComparison = () => {
-    if (comparisonMode === 'slider') {
-  return (
-        <div className="relative h-full w-full overflow-hidden rounded-lg">
-          {/* Before Image (Base) */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
-            <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-      </div>
-
-          {/* After Image (Overlay) */}
-        <div
-            className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700"
-          style={{
-              clipPath: `inset(0 ${100 - overlayOpacity}% 0 0)`,
-              transition: 'clip-path 0.3s ease-out'
-            }}
-          >
-            <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
-          </div>
-
-          {/* Slider Line */}
-          <div 
-            className="absolute inset-y-0 w-1 bg-white shadow-lg cursor-ew-resize"
-            style={{ left: `${overlayOpacity}%` }}
-          >
-            <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <ChevronDown className="h-4 w-4 text-blue-600 rotate-[-90deg]" />
-            </div>
-          </div>
-
-          {/* Date Labels */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between text-white text-sm font-medium">
-            <span>{satelliteAnalysis.dates.before}</span>
-            <span>{satelliteAnalysis.dates.after}</span>
-          </div>
-        </div>
-      )
-    }
-
-    if (comparisonMode === 'sideBySide') {
-      return (
-        <div className="grid grid-cols-2 h-full gap-2">
-          <div className="relative rounded-lg overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
-              <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <span className="text-white text-sm">{satelliteAnalysis.dates.before}</span>
-            </div>
-          </div>
-          <div className="relative rounded-lg overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700">
-              <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
-        </div>
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <span className="text-white text-sm">{satelliteAnalysis.dates.after}</span>
-            </div>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="relative h-full w-full overflow-hidden rounded-lg">
-        {/* Base Image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
-          <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-            </div>
-        
-        {/* Overlay Image */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700"
-          style={{ opacity: overlayOpacity / 100 }}
-        >
-          <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
-            </div>
-
-        {/* Date Labels */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="flex justify-between items-center">
-            <span className="text-white text-sm">{satelliteAnalysis.dates.before}</span>
-            <span className="text-white text-sm">Opacity: {overlayOpacity}%</span>
-            <span className="text-white text-sm">{satelliteAnalysis.dates.after}</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="space-y-6">
@@ -250,52 +154,19 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
             <TabsContent value="satellite" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Masuria Lake District</h3>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`p-2 ${comparisonMode === 'slider' ? 'bg-blue-50 text-blue-600' : ''}`}
-                        onClick={() => setComparisonMode('slider')}
-                      >
-                        <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`p-2 ${comparisonMode === 'sideBySide' ? 'bg-blue-50 text-blue-600' : ''}`}
-                        onClick={() => setComparisonMode('sideBySide')}
-                      >
-                        <SplitSquareHorizontal className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`p-2 ${comparisonMode === 'overlay' ? 'bg-blue-50 text-blue-600' : ''}`}
-                        onClick={() => setComparisonMode('overlay')}
-                      >
-                        <Layers className="h-4 w-4" />
-                      </Button>
+                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border">
+                  <div className="absolute inset-0 bg-cover bg-center" 
+                       style={{ 
+                         backgroundImage: 'url("/masuria-satellite.jpg")',
+                         filter: 'contrast(1.1) brightness(1.1)'
+                       }}>
+                    <div className="absolute inset-0 bg-black/20">
+                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                        <h3 className="text-white text-lg font-semibold mb-2">Masuria Lake District</h3>
+                        <p className="text-white/90 text-sm">Satellite-based water coverage analysis</p>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="h-[calc(100%-4rem)]">
-                    {renderSatelliteComparison()}
-                  </div>
-
-                  {comparisonMode === 'overlay' && (
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <Slider
-                        value={[overlayOpacity]}
-                        onValueChange={(value) => setOverlayOpacity(value[0])}
-                        max={100}
-                        step={1}
-                        className="w-full"
-                      />
-                    </div>
-                  )}
                 </div>
 
                 <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">

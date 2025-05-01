@@ -57,17 +57,17 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
   const renderSatelliteComparison = () => {
     if (comparisonMode === 'slider') {
-  return (
+      return (
         <div className="relative h-full w-full overflow-hidden rounded-lg">
           {/* Before Image (Base) */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
             <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-      </div>
-
+          </div>
+          
           {/* After Image (Overlay) */}
-        <div
+          <div 
             className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700"
-          style={{
+            style={{ 
               clipPath: `inset(0 ${100 - overlayOpacity}% 0 0)`,
               transition: 'clip-path 0.3s ease-out'
             }}
@@ -108,7 +108,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
           <div className="relative rounded-lg overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700">
               <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
-        </div>
+            </div>
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
               <span className="text-white text-sm">{satelliteAnalysis.dates.after}</span>
             </div>
@@ -122,7 +122,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
         {/* Base Image */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
           <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-            </div>
+        </div>
         
         {/* Overlay Image */}
         <div 
@@ -130,7 +130,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
           style={{ opacity: overlayOpacity / 100 }}
         >
           <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
-            </div>
+        </div>
 
         {/* Date Labels */}
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
