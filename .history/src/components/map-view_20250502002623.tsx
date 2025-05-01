@@ -94,7 +94,7 @@ export default function MapView({ date, compareDate }: MapViewProps) {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-1">
               <div className="h-3 w-3 rounded-full bg-red-500"></div>
-              <span className="text-xs">Major Decline (&gt;5%)</span>
+              <span className="text-xs">Major Decline (>5%)</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="h-3 w-3 rounded-full bg-amber-500"></div>

@@ -67,7 +67,7 @@ export default function WaterCoverageChart({ activeTab = 'coverage' }: WaterCove
               fontSize={12}
             />
             <YAxis
-              domain={[7000, 8000]}
+              domain={[300, 350]}
               stroke="#6b7280"
               fontSize={12}
               tickFormatter={(value) => `${value}km²`}
@@ -113,7 +113,7 @@ export default function WaterCoverageChart({ activeTab = 'coverage' }: WaterCove
             fontSize={12}
           />
           <YAxis
-            domain={[7200, 7900]}
+            domain={['dataMin - 5', 'dataMax + 5']}
             stroke="#6b7280"
             fontSize={12}
             tickFormatter={(value) => `${value}km²`}
