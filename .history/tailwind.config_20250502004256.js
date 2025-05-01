@@ -40,22 +40,6 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      perspective: {
-        'none': 'none',
-        'DEFAULT': '1000px',
-        '1000': '1000px',
-        '2000': '2000px',
-        '3000': '3000px',
-      },
-      transformStyle: {
-        '3d': 'preserve-3d',
-      },
-      rotate: {
-        'y-20': 'rotateY(20deg)',
-        'y-40': 'rotateY(40deg)',
-        'x-10': 'rotateX(10deg)',
-        'x-20': 'rotateX(20deg)',
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
