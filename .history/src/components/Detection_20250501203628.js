@@ -36,7 +36,7 @@ const Detection = () => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(false);
-
+        
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
             handleFile(e.dataTransfer.files[0]);
         }
@@ -64,7 +64,7 @@ const Detection = () => {
 
         setError(null);
         setSelectedImage(file);
-
+        
         // Create a preview
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -95,7 +95,7 @@ const Detection = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
+            
             setDetectionResult(response.data);
         } catch (err) {
             if (err.response) {
@@ -133,7 +133,7 @@ const Detection = () => {
 
                 <div className="detection-container">
                     {!selectedImage && !detectionResult && (
-                        <div
+                        <div 
                             className={`upload-area ${isDragging ? 'dragging' : ''}`}
                             onDragEnter={handleDragEnter}
                             onDragLeave={handleDragLeave}
@@ -142,8 +142,8 @@ const Detection = () => {
                         >
                             <div className="upload-icon">
                                 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 18V6M12 6L7 11M12 6L17 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    <path d="M3 20H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"></path>
+                                    <path d="M12 18V6M12 6L7 11M12 6L17 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M3 20H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                 </svg>
                             </div>
                             <p className="upload-text">Drag & drop your satellite image here or</p>
@@ -154,7 +154,7 @@ const Detection = () => {
                                 accept="image/jpeg,image/png,image/tiff"
                                 style={{ display: 'none' }}
                             />
-                            <button
+                            <button 
                                 className="browse-button"
                                 onClick={() => fileInputRef.current.click()}
                             >
@@ -170,7 +170,7 @@ const Detection = () => {
                                 <img id="preview-image" alt="Preview" />
                             </div>
                             <div className="preview-actions">
-                                <button
+                                <button 
                                     className="analyze-button"
                                     onClick={handleImageUpload}
                                     disabled={isLoading}
@@ -184,7 +184,7 @@ const Detection = () => {
                                         "Analyze Image"
                                     )}
                                 </button>
-                                <button
+                                <button 
                                     className="cancel-button"
                                     onClick={handleTryAgain}
                                     disabled={isLoading}
@@ -198,12 +198,12 @@ const Detection = () => {
                     {error && (
                         <div className="error-message">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"></circle>
-                                <path d="M12 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"></path>
-                                <circle cx="12" cy="16" r="1" fill="currentColor"></circle>
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                                <path d="M12 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                                <circle cx="12" cy="16" r="1" fill="currentColor"/>
                             </svg>
                             <p>{error}</p>
-                            <button
+                            <button 
                                 className="try-again-button"
                                 onClick={handleTryAgain}
                             >
@@ -226,9 +226,9 @@ const Detection = () => {
                                     </div>
                                 )}
                             </div>
-
+                            
                             <p className="result-summary">{detectionResult.changes}</p>
-
+                            
                             {detectionResult.details && (
                                 <div className="result-details">
                                     {detectionResult.details.map((detail, index) => (
@@ -239,8 +239,8 @@ const Detection = () => {
                                     ))}
                                 </div>
                             )}
-
-                            <button
+                            
+                            <button 
                                 className="analyze-button"
                                 onClick={handleTryAgain}
                             >

@@ -134,7 +134,7 @@ h6 {
 }
 
 .nav-link::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -388,7 +388,7 @@ h6 {
 }
 
 .tech-list li::before {
-  content: "✓";
+  content: '✓';
   color: var(--color-primary);
   position: absolute;
   left: 0;
@@ -788,25 +788,25 @@ h6 {
   .hero-section .container {
     flex-direction: column;
   }
-
+  
   .hero-content {
     padding-right: 0;
     margin-bottom: 40px;
   }
-
+  
   .about-content {
     flex-direction: column;
   }
-
+  
   .about-text {
     margin-bottom: 40px;
   }
-
+  
   .footer-content {
     flex-direction: column;
     gap: 40px;
   }
-
+  
   .footer-links {
     flex-direction: column;
     gap: 40px;
@@ -817,27 +817,27 @@ h6 {
   .section-header h2 {
     font-size: 28px;
   }
-
+  
   .section-subtitle {
     font-size: 16px;
   }
-
+  
   .hero-title {
     font-size: 2.5rem;
   }
-
+  
   .upload-area {
     padding: 30px 15px;
   }
-
+  
   .image-preview {
     height: 300px;
   }
-
+  
   .result-details {
     grid-template-columns: 1fr;
   }
-
+  
   .main-nav {
     display: none;
   }
@@ -847,11 +847,11 @@ h6 {
   .preview-actions {
     flex-direction: column;
   }
-
+  
   .image-preview {
     height: 250px;
   }
-
+  
   .hero-actions {
     flex-direction: column;
   }
