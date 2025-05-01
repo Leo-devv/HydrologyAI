@@ -44,6 +44,11 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
         title: "Vegetation Changes", 
         detail: "Increased brownish patches around lake edges indicate potential wetland transformation", 
         status: "alert" 
+      },
+      { 
+        title: "Water Surface Area", 
+        detail: "Approximately 8% reduction in total water surface area, most visible in narrow passages", 
+        status: "alert" 
       }
     ]
   }
@@ -257,17 +262,14 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
             <TabsContent value="satellite" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative h-[450px] w-full overflow-hidden rounded-lg bg-white border p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800">Masuria Lake District</h3>
-                      <p className="text-sm text-gray-600">25-Year Satellite Comparison</p>
-                    </div>
-                    <div className="flex items-center gap-1">
+                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800">Masuria Lake District</h3>
+                    <div className="flex items-center gap-2">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'slider' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'slider' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('slider')}
                       >
                         <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
@@ -275,7 +277,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'sideBySide' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'sideBySide' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('sideBySide')}
                       >
                         <SplitSquareHorizontal className="h-4 w-4" />
@@ -283,7 +285,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'overlay' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'overlay' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('overlay')}
                       >
                         <Layers className="h-4 w-4" />
@@ -291,7 +293,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                     </div>
                   </div>
 
-                  <div className="h-[calc(100%-3rem)]">
+                  <div className="h-[calc(100%-4rem)]">
                     {renderSatelliteComparison()}
                   </div>
 
@@ -308,49 +310,37 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                   )}
                 </div>
 
-                <div className="relative h-[450px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-lg font-semibold text-gray-800 mb-2">Change Analysis</div>
-                  <div className="text-sm text-gray-600 mb-6">Comparing {satelliteAnalysis.dates.before} to {satelliteAnalysis.dates.after}</div>
-                  
-                  <div className="space-y-6">
+                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
+                  <div className="text-base font-medium text-gray-600 mb-8">Satellite Analysis</div>
+                  <div className="space-y-8">
                     {satelliteAnalysis.keyFindings.map((finding, index) => (
                       <div key={index} className={`p-4 rounded-lg ${
                         finding.status === 'good' ? 'bg-green-50' :
                         finding.status === 'warning' ? 'bg-amber-50' : 'bg-red-50'
                       }`}>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-3 mb-2">
                           {finding.status === 'good' ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <CheckCircle2 className="h-5 w-5 text-green-500" />
                           ) : finding.status === 'warning' ? (
-                            <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-amber-500" />
                           ) : (
-                            <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-red-500" />
                           )}
-                          <h4 className={`font-medium text-base ${
+                          <h4 className={`font-medium ${
                             finding.status === 'good' ? 'text-green-700' :
                             finding.status === 'warning' ? 'text-amber-700' : 'text-red-700'
                           }`}>
                             {finding.title}
                           </h4>
                         </div>
-                        <div className={`ml-7 text-sm ${
+                        <p className={`text-sm ${
                           finding.status === 'good' ? 'text-green-600' :
                           finding.status === 'warning' ? 'text-amber-600' : 'text-red-600'
                         }`}>
                           {finding.detail}
-                        </div>
+                        </p>
                       </div>
                     ))}
-
-                    <div className="mt-auto pt-4 border-t">
-                      <div className="flex items-center justify-between text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                          <Satellite className="h-4 w-4" />
-                          <span>Satellite Data Analysis</span>
-                        </div>
-                        <span>Updated {new Date().toLocaleDateString()}</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

@@ -31,20 +31,13 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
   const satelliteAnalysis = {
     location: "Masuria Lake District",
     dates: {
-      before: "August 2000",
-      after: "August 2025"
+      before: "August 15th, 2018",
+      after: "August 15th, 2023"
     },
     keyFindings: [
-      { 
-        title: "Shoreline Erosion", 
-        detail: "Notable reduction in peninsula width and shoreline definition, particularly in the northern section", 
-        status: "warning" 
-      },
-      { 
-        title: "Vegetation Changes", 
-        detail: "Increased brownish patches around lake edges indicate potential wetland transformation", 
-        status: "alert" 
-      }
+      { title: "Shoreline Changes", detail: "2.1km reduction in shoreline perimeter", status: "warning" },
+      { title: "Vegetation Cover", detail: "15% decrease in aquatic vegetation", status: "alert" },
+      { title: "Water Clarity", detail: "Improved visibility in central zones", status: "good" }
     ]
   }
 
@@ -64,22 +57,23 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
   const renderSatelliteComparison = () => {
     if (comparisonMode === 'slider') {
-      return (
+  return (
         <div className="relative h-full w-full overflow-hidden rounded-lg">
           {/* Before Image (Base) */}
-          <div className="absolute inset-0 bg-cover bg-center"
-               style={{ backgroundImage: 'url("/2000.png")' }}>
-          </div>
-          
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
+            <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
+      </div>
+
           {/* After Image (Overlay) */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: 'url("/2025.png")',
+        <div
+            className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700"
+          style={{
               clipPath: `inset(0 ${100 - overlayOpacity}% 0 0)`,
               transition: 'clip-path 0.3s ease-out'
             }}
-          />
+          >
+            <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
+          </div>
 
           {/* Slider Line */}
           <div 
@@ -93,8 +87,8 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
           {/* Date Labels */}
           <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between text-white text-sm font-medium">
-            <span className="px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.before}</span>
-            <span className="px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.after}</span>
+            <span>{satelliteAnalysis.dates.before}</span>
+            <span>{satelliteAnalysis.dates.after}</span>
           </div>
         </div>
       )
@@ -104,19 +98,19 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
       return (
         <div className="grid grid-cols-2 h-full gap-2">
           <div className="relative rounded-lg overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center"
-                 style={{ backgroundImage: 'url("/2000.png")' }}>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
+              <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <span className="text-white text-sm px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.before}</span>
+              <span className="text-white text-sm">{satelliteAnalysis.dates.before}</span>
             </div>
           </div>
           <div className="relative rounded-lg overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center"
-                 style={{ backgroundImage: 'url("/2025.png")' }}>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700">
+              <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
+        </div>
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <span className="text-white text-sm px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.after}</span>
+              <span className="text-white text-sm">{satelliteAnalysis.dates.after}</span>
             </div>
           </div>
         </div>
@@ -126,25 +120,24 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
     return (
       <div className="relative h-full w-full overflow-hidden rounded-lg">
         {/* Base Image */}
-        <div className="absolute inset-0 bg-cover bg-center"
-             style={{ backgroundImage: 'url("/2000.png")' }}>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900">
+          <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
+            </div>
         
         {/* Overlay Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: 'url("/2025.png")',
-            opacity: overlayOpacity / 100 
-          }}
-        />
+          className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700"
+          style={{ opacity: overlayOpacity / 100 }}
+        >
+          <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
+            </div>
 
         {/* Date Labels */}
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
           <div className="flex justify-between items-center">
-            <span className="text-white text-sm px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.before}</span>
-            <span className="text-white text-sm px-2 py-1 bg-black/50 rounded">Opacity: {overlayOpacity}%</span>
-            <span className="text-white text-sm px-2 py-1 bg-black/50 rounded">{satelliteAnalysis.dates.after}</span>
+            <span className="text-white text-sm">{satelliteAnalysis.dates.before}</span>
+            <span className="text-white text-sm">Opacity: {overlayOpacity}%</span>
+            <span className="text-white text-sm">{satelliteAnalysis.dates.after}</span>
           </div>
         </div>
       </div>
@@ -257,17 +250,14 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
 
             <TabsContent value="satellite" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative h-[450px] w-full overflow-hidden rounded-lg bg-white border p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800">Masuria Lake District</h3>
-                      <p className="text-sm text-gray-600">25-Year Satellite Comparison</p>
-                    </div>
-                    <div className="flex items-center gap-1">
+                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800">Masuria Lake District</h3>
+                    <div className="flex items-center gap-2">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'slider' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'slider' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('slider')}
                       >
                         <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
@@ -275,7 +265,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'sideBySide' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'sideBySide' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('sideBySide')}
                       >
                         <SplitSquareHorizontal className="h-4 w-4" />
@@ -283,7 +273,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={`p-1.5 ${comparisonMode === 'overlay' ? 'bg-blue-50 text-blue-600' : ''}`}
+                        className={`p-2 ${comparisonMode === 'overlay' ? 'bg-blue-50 text-blue-600' : ''}`}
                         onClick={() => setComparisonMode('overlay')}
                       >
                         <Layers className="h-4 w-4" />
@@ -291,7 +281,7 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                     </div>
                   </div>
 
-                  <div className="h-[calc(100%-3rem)]">
+                  <div className="h-[calc(100%-4rem)]">
                     {renderSatelliteComparison()}
                   </div>
 
@@ -308,49 +298,37 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
                   )}
                 </div>
 
-                <div className="relative h-[450px] w-full overflow-hidden rounded-lg bg-white border p-6">
-                  <div className="text-lg font-semibold text-gray-800 mb-2">Change Analysis</div>
-                  <div className="text-sm text-gray-600 mb-6">Comparing {satelliteAnalysis.dates.before} to {satelliteAnalysis.dates.after}</div>
-                  
-                  <div className="space-y-6">
+                <div className="relative h-[400px] w-full overflow-hidden rounded-lg bg-white border p-6">
+                  <div className="text-base font-medium text-gray-600 mb-8">Satellite Analysis</div>
+                  <div className="space-y-8">
                     {satelliteAnalysis.keyFindings.map((finding, index) => (
                       <div key={index} className={`p-4 rounded-lg ${
                         finding.status === 'good' ? 'bg-green-50' :
                         finding.status === 'warning' ? 'bg-amber-50' : 'bg-red-50'
                       }`}>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-3 mb-2">
                           {finding.status === 'good' ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <CheckCircle2 className="h-5 w-5 text-green-500" />
                           ) : finding.status === 'warning' ? (
-                            <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-amber-500" />
                           ) : (
-                            <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-red-500" />
                           )}
-                          <h4 className={`font-medium text-base ${
+                          <h4 className={`font-medium ${
                             finding.status === 'good' ? 'text-green-700' :
                             finding.status === 'warning' ? 'text-amber-700' : 'text-red-700'
                           }`}>
                             {finding.title}
                           </h4>
                         </div>
-                        <div className={`ml-7 text-sm ${
+                        <p className={`text-sm ${
                           finding.status === 'good' ? 'text-green-600' :
                           finding.status === 'warning' ? 'text-amber-600' : 'text-red-600'
                         }`}>
                           {finding.detail}
-                        </div>
+                        </p>
                       </div>
                     ))}
-
-                    <div className="mt-auto pt-4 border-t">
-                      <div className="flex items-center justify-between text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                          <Satellite className="h-4 w-4" />
-                          <span>Satellite Data Analysis</span>
-                        </div>
-                        <span>Updated {new Date().toLocaleDateString()}</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

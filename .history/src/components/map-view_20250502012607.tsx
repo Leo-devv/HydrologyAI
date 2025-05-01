@@ -44,6 +44,11 @@ export default function WaterAnalyticsView({}: WaterAnalyticsProps) {
         title: "Vegetation Changes", 
         detail: "Increased brownish patches around lake edges indicate potential wetland transformation", 
         status: "alert" 
+      },
+      { 
+        title: "Water Surface Area", 
+        detail: "Approximately 8% reduction in total water surface area, most visible in narrow passages", 
+        status: "alert" 
       }
     ]
   }
