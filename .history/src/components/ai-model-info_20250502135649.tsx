@@ -15,7 +15,7 @@ export default function AIModelInfo() {
             <Brain className="h-4 w-4 text-blue-600" />
           </div>
         </div>
-        <CardDescription>Advanced ML model for water body analysis</CardDescription>
+        <CardDescription>Model trained on Masuria satellite imagery</CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
         <Tabs defaultValue="metrics" className="h-[265px]">
@@ -86,9 +86,9 @@ export default function AIModelInfo() {
                   <Cpu className="h-4 w-4 text-blue-600" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium">Architecture</h4>
+                  <h4 className="text-sm font-medium mb-1">Model Architecture</h4>
                   <p className="text-sm text-slate-600">
-                    U-Net with ResNet50 backbone for water segmentation
+                    U-Net architecture with ResNet50 backbone, optimized for water body segmentation
                   </p>
                 </div>
               </div>
@@ -98,16 +98,16 @@ export default function AIModelInfo() {
                   <Database className="h-4 w-4 text-blue-600" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium">Training Data</h4>
+                  <h4 className="text-sm font-medium mb-1">Training Data</h4>
                   <p className="text-sm text-slate-600">
-                    5,200+ Masuria satellite images (2015-2023)
+                    5,200+ satellite images of Masuria from 2015-2023, with manual annotations
                   </p>
                 </div>
               </div>
 
               <div className="mt-3 pt-3 border-t border-slate-200">
                 <p className="text-sm text-slate-600">
-                  Trained on diverse seasonal and weather conditions for optimal water detection accuracy.
+                  Our model was trained on Masuria satellite imagery, focusing on seasonal variations and weather conditions for robust water detection.
                 </p>
               </div>
             </div>
