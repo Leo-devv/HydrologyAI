@@ -17,7 +17,6 @@ import { Badge } from "@/components/ui/badge"
 import About from "@/pages/About"
 import PredictionCalculator from "@/components/prediction-calculator"
 import AIModelInfo from "@/components/ai-model-info"
-import { jsPDF } from 'jspdf'
 
 function Dashboard() {
   const [date, setDate] = useState<Date>(new Date(2023, 7, 15))
@@ -42,182 +41,6 @@ function Dashboard() {
   const image2000 = "/images/2000-masuri.png"
   const image2030 = "/images/2030 projection.png"
 
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 20;
-    const contentWidth = pageWidth - (margin * 2);
-    
-    // Helper functions
-    const addSectionHeader = (text: string, y: number) => {
-      doc.setFillColor(0, 51, 102);
-      doc.rect(0, y - 6, pageWidth, 12, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(14);
-      doc.text(text, margin, y);
-      return y + 20;
-    };
-
-    const addSubHeader = (text: string, y: number) => {
-      doc.setTextColor(0, 51, 102);
-      doc.setFontSize(12);
-      doc.setFont(undefined, 'bold');
-      doc.text(text, margin, y);
-      doc.setFont(undefined, 'normal');
-      return y + 12;
-    };
-
-    const addParagraph = (text: string, y: number, indent: number = 0) => {
-      doc.setTextColor(60, 60, 60);
-      doc.setFontSize(10);
-      const lines = doc.splitTextToSize(text, contentWidth - indent);
-      doc.text(lines, margin + indent, y);
-      return y + (lines.length * 6) + 8;
-    };
-
-    // Header
-    doc.setFillColor(0, 51, 102);
-    doc.rect(0, 0, pageWidth, 40, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.text('Masuria Lake District', margin, 25);
-    doc.setFontSize(16);
-    doc.text('Environmental Change Analysis Report', margin, 35);
-
-    // Report metadata
-    doc.setTextColor(100, 100, 100);
-    doc.setFontSize(10);
-    doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, pageWidth - margin, 50, { align: 'right' });
-    doc.text('Report ID: MAL-' + Math.random().toString(36).substr(2, 9).toUpperCase(), pageWidth - margin, 55, { align: 'right' });
-
-    let yPos = 70;
-
-    // Executive Summary
-    yPos = addSectionHeader('Executive Summary', yPos);
-    yPos = addParagraph(`This comprehensive analysis examines the environmental changes in the Masuria Lake District between 2000 and 2030, utilizing advanced AI modeling and satellite imagery analysis. The report highlights significant changes in vegetation, water bodies, and climate patterns, providing insights into future environmental trends and their implications.`, yPos);
-
-    // Historical Baseline (2000)
-    yPos = addSectionHeader('Historical Baseline (2000)', yPos + 10);
-    
-    const baseline = [
-      { title: 'Lush Vegetation', desc: 'Dense, continuous green forests and fertile farmland dominated the region.' },
-      { title: 'High Water Levels', desc: 'Lakes appeared full and expansive with smooth, consistent shorelines.' },
-      { title: 'Stable Climate Indicators', desc: 'No major signs of hydrological stress or extreme weather.' },
-      { title: 'Minimal Land Fragmentation', desc: 'Agricultural plots and roads were visible but less intrusive.' },
-      { title: 'Cloud Coverage', desc: 'Mild and scattered clouds suggest stable meteorological activity.' }
-    ];
-
-    baseline.forEach(item => {
-      if (yPos > pageHeight - 40) {
-        doc.addPage();
-        yPos = 20;
-      }
-      yPos = addSubHeader(item.title, yPos);
-      yPos = addParagraph(item.desc, yPos, 10);
-    });
-
-    // AI Model Predictions
-    yPos = addSectionHeader('AI Model Predictions (2030)', yPos + 10);
-    
-    const predictions2030 = [
-      { title: 'Reduced Vegetation Density', desc: 'Noticeable shift from lush green to patchier, yellow-brown tones.' },
-      { title: 'Shrunken Water Bodies', desc: 'Lakes exhibit contracted outlines and exposed lakebed margins.' },
-      { title: 'Hydrological Stress', desc: 'Water networks are fragmented, suggesting lower groundwater and rainfall.' },
-      { title: 'Increased Land Use Pressure', desc: 'More grid-like, structured fields suggest intensified farming or land conversion.' },
-      { title: 'Heavier Cloud Cover & Shadows', desc: 'Possibly indicating atmospheric changes tied to altered climate behavior.' }
-    ];
-
-    predictions2030.forEach(item => {
-      if (yPos > pageHeight - 40) {
-        doc.addPage();
-        yPos = 20;
-      }
-      yPos = addSubHeader(item.title, yPos);
-      yPos = addParagraph(item.desc, yPos, 10);
-    });
-
-    // Key Findings
-    if (yPos > pageHeight - 100) {
-      doc.addPage();
-      yPos = 20;
-    }
-    yPos = addSectionHeader('Key Findings & Implications', yPos + 10);
-
-    const findings = [
-      {
-        title: 'Water Resource Management',
-        desc: 'Without intervention, Masuria could lose up to 25% of its surface water by 2050, significantly impacting tourism, agriculture, and local ecosystems.'
-      },
-      {
-        title: 'Biodiversity Impact',
-        desc: 'Changing water levels will alter habitats for numerous species, with potential local extinctions of water-dependent flora and fauna.'
-      },
-      {
-        title: 'Economic Considerations',
-        desc: 'Tourism revenue could decrease by 15-30% if water recreation opportunities diminish due to reduced lake sizes and water quality issues.'
-      },
-      {
-        title: 'Mitigation Strategies',
-        desc: 'Implementing water conservation measures and sustainable land use policies could reduce projected water loss by up to 60%.'
-      }
-    ];
-
-    findings.forEach(finding => {
-      if (yPos > pageHeight - 50) {
-        doc.addPage();
-        yPos = 20;
-      }
-      yPos = addSubHeader(finding.title, yPos);
-      yPos = addParagraph(finding.desc, yPos, 10);
-    });
-
-    // AI Model Information
-    if (yPos > pageHeight - 80) {
-      doc.addPage();
-      yPos = 20;
-    }
-    yPos = addSectionHeader('AI Model Methodology', yPos + 10);
-    yPos = addParagraph('These predictions were generated by an AI model trained to simulate regional climate evolution. The comparison reflects a plausible future state if current drought trends and land use expansion continue unmitigated in the Masuria region. The model utilizes extensive historical data, satellite imagery, and advanced machine learning algorithms to provide accurate environmental change predictions.', yPos);
-
-    // Recommendations
-    if (yPos > pageHeight - 100) {
-      doc.addPage();
-      yPos = 20;
-    }
-    yPos = addSectionHeader('Recommended Actions', yPos + 10);
-    const recommendations = [
-      'Implement immediate water conservation measures across the region',
-      'Develop sustainable tourism practices to minimize environmental impact',
-      'Establish protected zones around critical water bodies and habitats',
-      'Create a regional monitoring system for water levels and quality',
-      'Engage local communities in conservation efforts and awareness programs'
-    ];
-
-    recommendations.forEach(rec => {
-      if (yPos > pageHeight - 20) {
-        doc.addPage();
-        yPos = 20;
-      }
-      yPos = addParagraph('• ' + rec, yPos, 5);
-    });
-
-    // Footer on all pages
-    const pageCount = doc.internal.getNumberOfPages();
-    for(let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-      doc.setFillColor(0, 51, 102);
-      doc.rect(0, pageHeight - 20, pageWidth, 20, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(8);
-      doc.text('Generated by Masuria Lake District AI Analysis System | Confidential Report', pageWidth/2, pageHeight - 10, { align: 'center' });
-      doc.text(`Page ${i}/${pageCount}`, pageWidth - 20, pageHeight - 10);
-    }
-
-    // Save the PDF
-    doc.save('masuria-environmental-analysis-report.pdf');
-  };
-
   return (
     <main className="flex min-h-screen flex-col bg-slate-50">
       <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-blue-700 to-blue-900">
@@ -233,7 +56,7 @@ function Dashboard() {
                 About Project
               </Button>
             </Link>
-            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white" onClick={generatePDF}>
+            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white">
               <Download className="mr-2 h-4 w-4" />
               Export Analysis Report
             </Button>
