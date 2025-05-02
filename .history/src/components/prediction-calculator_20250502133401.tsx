@@ -104,8 +104,6 @@ export default function PredictionCalculator() {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 20;
-    const contentWidth = pageWidth - (margin * 2);
     
     // Helper functions
     const addSectionHeader = (text: string, y: number) => {
@@ -113,25 +111,25 @@ export default function PredictionCalculator() {
       doc.rect(0, y - 6, pageWidth, 12, 'F');
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(14);
-      doc.text(text, margin, y);
-      return y + 20; // Increased spacing after header
+      doc.text(text, 10, y);
+      return y + 15; // Return next Y position
     };
 
     const addSubHeader = (text: string, y: number) => {
       doc.setTextColor(0, 51, 102);
       doc.setFontSize(12);
       doc.setFont(undefined, 'bold');
-      doc.text(text, margin, y);
+      doc.text(text, 10, y);
       doc.setFont(undefined, 'normal');
-      return y + 12; // Increased spacing after subheader
+      return y + 7;
     };
 
     const addParagraph = (text: string, y: number, indent: number = 0) => {
       doc.setTextColor(60, 60, 60);
       doc.setFontSize(10);
-      const lines = doc.splitTextToSize(text, contentWidth - indent);
-      doc.text(lines, margin + indent, y);
-      return y + (lines.length * 6) + 8; // Adjusted line spacing
+      const lines = doc.splitTextToSize(text, pageWidth - 20 - indent);
+      doc.text(lines, 10 + indent, y);
+      return y + (lines.length * 5) + 5;
     };
 
     // Header
@@ -139,15 +137,15 @@ export default function PredictionCalculator() {
     doc.rect(0, 0, pageWidth, 40, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
-    doc.text('Masuria Lake District', margin, 25);
+    doc.text('Masuria Lake District', 10, 20);
     doc.setFontSize(16);
-    doc.text('Environmental Change Analysis Report', margin, 35);
+    doc.text('Environmental Change Analysis Report', 10, 30);
 
     // Report metadata
     doc.setTextColor(100, 100, 100);
     doc.setFontSize(10);
-    doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, pageWidth - margin, 50, { align: 'right' });
-    doc.text('Report ID: MAL-' + Math.random().toString(36).substr(2, 9).toUpperCase(), pageWidth - margin, 55, { align: 'right' });
+    doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, pageWidth - 15, 50, { align: 'right' });
+    doc.text('Report ID: MAL-' + Math.random().toString(36).substr(2, 9).toUpperCase(), pageWidth - 15, 55, { align: 'right' });
 
     let yPos = 70;
 
@@ -167,16 +165,16 @@ export default function PredictionCalculator() {
     ];
 
     baseline.forEach(item => {
-      if (yPos > pageHeight - 40) {
-        doc.addPage();
-        yPos = 20;
-      }
       yPos = addSubHeader(item.title, yPos);
       yPos = addParagraph(item.desc, yPos, 10);
     });
 
-    // AI Model Predictions
-    yPos = addSectionHeader('AI Model Predictions (2030)', yPos + 10);
+    // AI Model Predictions - Start on same page if space available
+    if (yPos < pageHeight - 120) {
+      yPos = addSectionHeader('AI Model Predictions (2030)', yPos + 10);
+    } else {
+      yPos = addSectionHeader('AI Model Predictions (2030)', 20);
+    }
     
     const predictions2030 = [
       { title: 'Reduced Vegetation Density', desc: 'Noticeable shift from lush green to patchier, yellow-brown tones.' },
@@ -197,11 +195,12 @@ export default function PredictionCalculator() {
 
     // Current Analysis Results
     if (prediction) {
-      doc.addPage();
-      yPos = 20;
-      yPos = addSectionHeader('Current Analysis Results', yPos);
+      if (yPos > pageHeight - 100) {
+        doc.addPage();
+        yPos = 20;
+      }
+      yPos = addSectionHeader('Current Analysis Results', yPos + 10);
       
-      // Create metrics table
       const metrics = [
         ['Metric', 'Current Value', 'Trend', 'Impact Level'],
         ['Water Level', `${prediction.waterLevel} km²`, '▼ Declining', 'High'],
@@ -210,42 +209,36 @@ export default function PredictionCalculator() {
         ['Vegetation Index', prediction.vegetationIndex.toFixed(2), '▼ Declining', 'Severe']
       ];
 
-      const colWidths = [45, 40, 35, 35];
-      const startX = margin;
-      
-      metrics.forEach((row, rowIndex) => {
-        let x = startX;
-        const isHeader = rowIndex === 0;
-        
+      metrics.forEach((row, i) => {
+        if (yPos > pageHeight - 40) {
+          doc.addPage();
+          yPos = 20;
+        }
+        const isHeader = i === 0;
         if (isHeader) {
           doc.setFillColor(240, 240, 240);
-          doc.rect(margin - 2, yPos - 5, contentWidth + 4, 10, 'F');
+          doc.rect(10, yPos - 5, pageWidth - 20, 8, 'F');
           doc.setFont(undefined, 'bold');
         } else {
           doc.setFont(undefined, 'normal');
         }
-        
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
-        
-        row.forEach((cell, colIndex) => {
-          doc.text(cell, x, yPos);
-          x += colWidths[colIndex];
-        });
-        
-        yPos += 12;
+        doc.text(row[0], 15, yPos);
+        doc.text(row[1], 70, yPos);
+        doc.text(row[2], 120, yPos);
+        doc.text(row[3], 160, yPos);
+        yPos += 8;
       });
 
-      yPos += 5;
+      yPos += 10;
       yPos = addParagraph(prediction.description, yPos);
     }
 
-    // Key Findings
-    if (yPos > pageHeight - 100) {
-      doc.addPage();
-      yPos = 20;
-    }
-    yPos = addSectionHeader('Key Findings & Implications', yPos + 10);
+    // Key Findings - Start on new page
+    doc.addPage();
+    yPos = 20;
+    yPos = addSectionHeader('Key Findings & Implications', yPos);
 
     const findings = [
       {
@@ -267,11 +260,11 @@ export default function PredictionCalculator() {
     ];
 
     findings.forEach(finding => {
-      if (yPos > pageHeight - 50) {
+      if (yPos > pageHeight - 40) {
         doc.addPage();
         yPos = 20;
       }
-      yPos = addSubHeader(finding.title, yPos);
+      yPos = addSubHeader(finding.title, yPos + 5);
       yPos = addParagraph(finding.desc, yPos, 10);
     });
 
