@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress"
 
 export default function AIModelInfo() {
   return (
-    <Card className="h-[375.7px]">
+    <Card className="h-[450px]">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle>AI Model Performance</CardTitle>
@@ -18,7 +18,7 @@ export default function AIModelInfo() {
         <CardDescription>Model trained on Masuria satellite imagery</CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="metrics" className="h-[250px]">
+        <Tabs defaultValue="metrics" className="h-[330px]">
           <TabsList className="grid w-full grid-cols-2 bg-slate-100/80 rounded-lg p-1 gap-1">
             <TabsTrigger 
               value="metrics" 

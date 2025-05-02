@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress"
 
 export default function AIModelInfo() {
   return (
-    <Card className="h-[375.7px]">
+    <Card className="h-[3765.5px]">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle>AI Model Performance</CardTitle>
