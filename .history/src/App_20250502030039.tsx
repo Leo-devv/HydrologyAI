@@ -74,19 +74,13 @@ function Dashboard() {
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center justify-between">
                     <div className="grid grid-cols-2 gap-8">
-                      <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 shadow-sm">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                          <span className="text-sm font-semibold text-blue-700">Current State Analysis</span>
-                        </div>
-                        <span className="text-xs text-blue-600/80">Satellite Data from 2000</span>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-blue-700">Historical Baseline</span>
+                        <span className="text-sm text-muted-foreground">Early 2000s</span>
                       </div>
-                      <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 shadow-sm">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-                          <span className="text-sm font-semibold text-purple-700">Future Prediction</span>
-                        </div>
-                        <span className="text-xs text-purple-600/80">AI Model Forecast 2030</span>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-purple-700">AI Projection</span>
+                        <span className="text-sm text-muted-foreground">Year 2030</span>
                       </div>
                     </div>
                   </div>
