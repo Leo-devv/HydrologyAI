@@ -7,31 +7,21 @@ import { Progress } from "@/components/ui/progress"
 
 export default function AIModelInfo() {
   return (
-    <Card className="h-[400px]">
-      <CardHeader className="pb-3">
+    <Card>
+      <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>AI Model Performance</CardTitle>
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100">
             <Brain className="h-4 w-4 text-blue-600" />
           </div>
         </div>
-        <CardDescription>Model trained on Masuria satellite imagery</CardDescription>
+        <CardDescription>Our custom CNN model trained on Masuria satellite imagery</CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="metrics" className="h-[280px]">
-          <TabsList className="grid w-full grid-cols-2 bg-slate-100/80 rounded-lg p-1 gap-1">
-            <TabsTrigger 
-              value="metrics" 
-              className="rounded-md data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
-            >
-              Metrics
-            </TabsTrigger>
-            <TabsTrigger 
-              value="architecture"
-              className="rounded-md data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
-            >
-              Architecture
-            </TabsTrigger>
+        <Tabs defaultValue="metrics">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="metrics">Metrics</TabsTrigger>
+            <TabsTrigger value="architecture">Architecture</TabsTrigger>
           </TabsList>
           <TabsContent value="metrics" className="pt-4 space-y-4">
             <div className="space-y-2">
@@ -80,34 +70,32 @@ export default function AIModelInfo() {
           </TabsContent>
 
           <TabsContent value="architecture" className="pt-4">
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 mt-0.5">
-                  <Cpu className="h-4 w-4 text-blue-600" />
-                </div>
+                <Cpu className="h-5 w-5 text-blue-500 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-medium mb-1">Model Architecture</h4>
-                  <p className="text-sm text-slate-600">
+                  <h4 className="text-sm font-medium">Model Architecture</h4>
+                  <p className="text-xs text-muted-foreground">
                     U-Net architecture with ResNet50 backbone, optimized for water body segmentation
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 mt-0.5">
-                  <Database className="h-4 w-4 text-blue-600" />
-                </div>
+                <Database className="h-5 w-5 text-blue-500 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-medium mb-1">Training Data</h4>
-                  <p className="text-sm text-slate-600">
+                  <h4 className="text-sm font-medium">Training Data</h4>
+                  <p className="text-xs text-muted-foreground">
                     5,200+ satellite images of Masuria from 2015-2023, with manual annotations
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-slate-200">
-                <p className="text-sm text-slate-600">
-                  Our model was trained on Masuria satellite imagery, focusing on seasonal variations and weather conditions for robust water detection.
+              <div className="border-t pt-3 mt-3">
+                <p className="text-xs text-muted-foreground">
+                  Our model was trained on a specialized dataset of Masuria satellite imagery, with particular focus on
+                  seasonal variations and different weather conditions to ensure robust water detection across all
+                  scenarios.
                 </p>
               </div>
             </div>

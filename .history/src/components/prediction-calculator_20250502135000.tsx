@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -381,36 +381,28 @@ export default function PredictionCalculator() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm h-[135px]">
-                    <CardHeader className="pb-2 space-y-0">
+                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm">
+                    <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold text-slate-800">Historical Data</CardTitle>
-                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100">
+                        <CardTitle>Historical Data</CardTitle>
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100">
                           <Calendar className="h-4 w-4 text-blue-600" />
                         </div>
                       </div>
+                      <CardDescription>Analysis based on data from year 2000 onwards</CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-sm text-slate-600 line-clamp-2">
-                        Analysis based on data from year 2000 onwards
-                      </p>
-                    </CardContent>
                   </Card>
 
-                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm h-[135px]">
-                    <CardHeader className="pb-2 space-y-0">
+                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm">
+                    <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold text-slate-800">AI Model</CardTitle>
-                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100">
+                        <CardTitle>AI Model Performance</CardTitle>
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100">
                           <BarChart className="h-4 w-4 text-emerald-600" />
                         </div>
                       </div>
+                      <CardDescription>96% accuracy on historical predictions</CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-sm text-slate-600 line-clamp-2">
-                        96% accuracy on historical predictions
-                      </p>
-                    </CardContent>
                   </Card>
                 </div>
               </div>

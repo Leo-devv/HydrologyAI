@@ -381,8 +381,8 @@ export default function PredictionCalculator() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm h-[135px]">
-                    <CardHeader className="pb-2 space-y-0">
+                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm">
+                    <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base font-semibold text-slate-800">Historical Data</CardTitle>
                         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100">
@@ -391,14 +391,14 @@ export default function PredictionCalculator() {
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <p className="text-sm text-slate-600 line-clamp-2">
+                      <p className="text-sm text-slate-600">
                         Analysis based on data from year 2000 onwards
                       </p>
                     </CardContent>
                   </Card>
 
-                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm h-[135px]">
-                    <CardHeader className="pb-2 space-y-0">
+                  <Card className="backdrop-blur-xl bg-white/50 border border-slate-200/50 shadow-sm">
+                    <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base font-semibold text-slate-800">AI Model</CardTitle>
                         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100">
@@ -407,7 +407,7 @@ export default function PredictionCalculator() {
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <p className="text-sm text-slate-600 line-clamp-2">
+                      <p className="text-sm text-slate-600">
                         96% accuracy on historical predictions
                       </p>
                     </CardContent>
