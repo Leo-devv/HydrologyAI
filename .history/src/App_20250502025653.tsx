@@ -16,15 +16,15 @@ import MapView from "@/components/map-view"
 import { Badge } from "@/components/ui/badge"
 import About from "@/pages/About"
 
+// Import satellite images
+const image2000 = "/images/2000-masuri.png"
+const image2030 = "/images/2030 projection.png"
+
 function Dashboard() {
   const [date, setDate] = useState<Date>(new Date(2023, 7, 15))
   const [compareDate, setCompareDate] = useState<Date>(new Date(2018, 7, 15))
   const [sliderValue, setSliderValue] = useState<number[]>([50])
   const [activeChartTab, setActiveChartTab] = useState<'coverage' | 'seasonal'>('coverage')
-
-  // Image paths for satellite comparison
-  const image2000 = "/images/2000-masuri.png"
-  const image2030 = "/images/2030 projection.png"
 
   return (
     <main className="flex min-h-screen flex-col bg-slate-50">
