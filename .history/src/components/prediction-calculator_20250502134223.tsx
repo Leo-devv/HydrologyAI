@@ -381,7 +381,7 @@ export default function PredictionCalculator() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="backdrop-blur-xl bg-white/50 border-white/20 h-[120px] flex flex-col justify-center">
+                  <Card className="backdrop-blur-xl bg-white/50 border-white/20">
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3 mb-2">
                         <div className="p-2 rounded-lg bg-blue-100">
@@ -395,7 +395,7 @@ export default function PredictionCalculator() {
                     </CardContent>
                   </Card>
 
-                  <Card className="backdrop-blur-xl bg-white/50 border-white/20 h-[120px] flex flex-col justify-center">
+                  <Card className="backdrop-blur-xl bg-white/50 border-white/20">
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3 mb-2">
                         <div className="p-2 rounded-lg bg-emerald-100">
@@ -512,17 +512,17 @@ export default function PredictionCalculator() {
           {/* Right Column - Insights and Comparison */}
           <div>
             <div className="backdrop-blur-xl bg-white/70 p-8 rounded-2xl shadow-lg border border-white/20">
-              <Tabs defaultValue="comparison" className="w-full">
-                <TabsList className="w-full grid grid-cols-2 mb-8 bg-slate-100/80 rounded-xl p-1.5 gap-2 relative">
+              <Tabs defaultValue="comparison">
+                <TabsList className="grid w-full grid-cols-2 mb-8 p-1 bg-slate-100 rounded-lg gap-1">
                   <TabsTrigger 
                     value="comparison"
-                    className="w-full px-3 py-2.5 rounded-lg relative z-10 data-[state=active]:bg-white/95 data-[state=active]:text-slate-900 data-[state=active]:shadow-sm transition-all duration-300 text-slate-600 hover:text-slate-900 overflow-hidden"
+                    className="rounded-md py-2.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
                   >
                     Historical Comparison
                   </TabsTrigger>
                   <TabsTrigger 
                     value="insights"
-                    className="w-full px-3 py-2.5 rounded-lg relative z-10 data-[state=active]:bg-white/95 data-[state=active]:text-slate-900 data-[state=active]:shadow-sm transition-all duration-300 text-slate-600 hover:text-slate-900 overflow-hidden"
+                    className="rounded-md py-2.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
                   >
                     AI Insights
                   </TabsTrigger>
