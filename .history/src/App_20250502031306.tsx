@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Slider } from "@/components/ui/slider"
-import { Download, Info, MapPin, CalendarIcon, Droplets, AlertTriangle, Leaf, Home, ChevronDown, Fish, ChevronUp } from "lucide-react"
+import { Download, Info, MapPin, CalendarIcon, Droplets } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
@@ -21,19 +21,6 @@ function Dashboard() {
   const [compareDate, setCompareDate] = useState<Date>(new Date(2018, 7, 15))
   const [sliderValue, setSliderValue] = useState<number[]>([50])
   const [activeChartTab, setActiveChartTab] = useState<'coverage' | 'seasonal'>('coverage')
-  const [openSections, setOpenSections] = useState({
-    ecosystem: true,
-    tourism: false,
-    water: false,
-    wildlife: false
-  })
-
-  const toggleSection = (section: 'ecosystem' | 'tourism' | 'water' | 'wildlife') => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }))
-  }
 
   // Image paths for satellite comparison
   const image2000 = "/images/2000-masuri.png"
@@ -175,144 +162,26 @@ function Dashboard() {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Environmental Impact</CardTitle>
-                    <CardDescription>AI-generated insights on detected changes in Masuria</CardDescription>
-                  </div>
-                  <div className="h-8 w-8 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center">
-                    <AlertTriangle className="h-4 w-4 text-amber-500" />
-                  </div>
-                </div>
+                <CardTitle>Environmental Impact Assessment</CardTitle>
+                <CardDescription>Key findings and conservation measures</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('ecosystem')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Leaf className="h-5 w-5 text-emerald-500" />
-                        <h3 className="font-medium">Ecosystem Impact</h3>
-                      </div>
-                      {openSections.ecosystem ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.ecosystem && (
-                      <div className="pl-7">
-                        <p className="text-sm text-slate-600 mb-3">
-                          The 8.2% reduction in water coverage over the past 5 years has implications for Masuria's ecosystems:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Reduced habitat for native fish species</li>
-                          <li>• Changes in shoreline vegetation patterns</li>
-                          <li>• Altered migration patterns for water birds</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="p-4 rounded-lg border bg-slate-50">
+                    <h3 className="font-medium mb-3">Current Impact</h3>
+                    <ul className="space-y-2 text-sm text-slate-600">
+                      <li>• Reduced water levels in lake systems</li>
+                      <li>• Changes in local wetland habitats</li>
+                      <li>• Effects on regional tourism activities</li>
+                    </ul>
                   </div>
-
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('tourism')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Home className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Tourism Impact</h3>
-                      </div>
-                      {openSections.tourism ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.tourism && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Potential effects on Masuria's tourism industry:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Reduced water access at some popular beaches</li>
-                          <li>• Changes to sailing routes between lakes</li>
-                          <li>• Potential economic impact on local businesses</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('water')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Droplets className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Water Resources</h3>
-                      </div>
-                      {openSections.water ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.water && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Water availability analysis for the Masuria region:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Groundwater levels showing 5-7% decline</li>
-                          <li>• Increased seasonal fluctuations in lake levels</li>
-                          <li>• Potential challenges for local water management</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('wildlife')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Fish className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Wildlife Impact</h3>
-                      </div>
-                      {openSections.wildlife ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.wildlife && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Effects on Masuria's wildlife populations:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Changes in fish spawning areas</li>
-                          <li>• Altered habitats for amphibians</li>
-                          <li>• Potential stress on protected species</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
+                  <div className="p-4 rounded-lg border bg-slate-50">
+                    <h3 className="font-medium mb-3">Conservation Measures</h3>
+                    <ul className="space-y-2 text-sm text-slate-600">
+                      <li>• Water resource management programs</li>
+                      <li>• Ecosystem restoration initiatives</li>
+                      <li>• Community-based conservation efforts</li>
+                    </ul>
                   </div>
                 </div>
               </CardContent>

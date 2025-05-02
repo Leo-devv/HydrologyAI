@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Slider } from "@/components/ui/slider"
-import { Download, Info, MapPin, CalendarIcon, Droplets, AlertTriangle, Leaf, Home, ChevronDown, Fish, ChevronUp } from "lucide-react"
+import { Download, Info, MapPin, CalendarIcon, Droplets } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
@@ -21,19 +21,6 @@ function Dashboard() {
   const [compareDate, setCompareDate] = useState<Date>(new Date(2018, 7, 15))
   const [sliderValue, setSliderValue] = useState<number[]>([50])
   const [activeChartTab, setActiveChartTab] = useState<'coverage' | 'seasonal'>('coverage')
-  const [openSections, setOpenSections] = useState({
-    ecosystem: true,
-    tourism: false,
-    water: false,
-    wildlife: false
-  })
-
-  const toggleSection = (section: 'ecosystem' | 'tourism' | 'water' | 'wildlife') => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }))
-  }
 
   // Image paths for satellite comparison
   const image2000 = "/images/2000-masuri.png"
@@ -175,144 +162,72 @@ function Dashboard() {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Environmental Impact</CardTitle>
-                    <CardDescription>AI-generated insights on detected changes in Masuria</CardDescription>
+                <CardTitle>Environmental Impact Assessment</CardTitle>
+                <CardDescription>Comprehensive analysis of ecological and socioeconomic impacts</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-red-500"></div>
+                      <h3 className="font-semibold">Environmental Vulnerabilities</h3>
+                    </div>
+                    <div className="space-y-3 text-sm">
+                      <div className="p-3 bg-red-50 rounded-md border border-red-100">
+                        <span className="font-medium text-red-900">Hydrological Impact</span>
+                        <p className="mt-1 text-red-700">Significant reduction in water table levels affecting interconnected lake systems and groundwater reserves</p>
+                      </div>
+                      <div className="p-3 bg-red-50 rounded-md border border-red-100">
+                        <span className="font-medium text-red-900">Ecosystem Degradation</span>
+                        <p className="mt-1 text-red-700">Loss of critical wetland habitats and disruption of aquatic species' breeding grounds</p>
+                      </div>
+                      <div className="p-3 bg-red-50 rounded-md border border-red-100">
+                        <span className="font-medium text-red-900">Socioeconomic Pressure</span>
+                        <p className="mt-1 text-red-700">Declining water resources affecting local agriculture, tourism, and recreational activities</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="h-8 w-8 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center">
-                    <AlertTriangle className="h-4 w-4 text-amber-500" />
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-emerald-500"></div>
+                      <h3 className="font-semibold">Conservation Initiatives</h3>
+                    </div>
+                    <div className="space-y-3 text-sm">
+                      <div className="p-3 bg-emerald-50 rounded-md border border-emerald-100">
+                        <span className="font-medium text-emerald-900">Water Management</span>
+                        <p className="mt-1 text-emerald-700">Implementation of advanced water conservation systems and sustainable usage policies</p>
+                      </div>
+                      <div className="p-3 bg-emerald-50 rounded-md border border-emerald-100">
+                        <span className="font-medium text-emerald-900">Ecosystem Restoration</span>
+                        <p className="mt-1 text-emerald-700">Comprehensive habitat rehabilitation programs focusing on native species and natural water retention</p>
+                      </div>
+                      <div className="p-3 bg-emerald-50 rounded-md border border-emerald-100">
+                        <span className="font-medium text-emerald-900">Community Engagement</span>
+                        <p className="mt-1 text-emerald-700">Collaborative initiatives with local stakeholders for sustainable resource management</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('ecosystem')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Leaf className="h-5 w-5 text-emerald-500" />
-                        <h3 className="font-medium">Ecosystem Impact</h3>
-                      </div>
-                      {openSections.ecosystem ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.ecosystem && (
-                      <div className="pl-7">
-                        <p className="text-sm text-slate-600 mb-3">
-                          The 8.2% reduction in water coverage over the past 5 years has implications for Masuria's ecosystems:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Reduced habitat for native fish species</li>
-                          <li>• Changes in shoreline vegetation patterns</li>
-                          <li>• Altered migration patterns for water birds</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
 
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('tourism')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Home className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Tourism Impact</h3>
-                      </div>
-                      {openSections.tourism ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </div>
-                    {openSections.tourism && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Potential effects on Masuria's tourism industry:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Reduced water access at some popular beaches</li>
-                          <li>• Changes to sailing routes between lakes</li>
-                          <li>• Potential economic impact on local businesses</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
+                <div className="mt-6 border-t pt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                    <h3 className="font-semibold">Monitoring & Assessment Framework</h3>
                   </div>
-
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('water')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Droplets className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Water Resources</h3>
-                      </div>
-                      {openSections.water ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <div className="p-3 bg-blue-50 rounded-md border border-blue-100">
+                      <span className="text-sm font-medium text-blue-900">Satellite Surveillance</span>
+                      <p className="mt-1 text-sm text-blue-700">High-resolution imagery analysis for real-time monitoring of water bodies</p>
                     </div>
-                    {openSections.water && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Water availability analysis for the Masuria region:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Groundwater levels showing 5-7% decline</li>
-                          <li>• Increased seasonal fluctuations in lake levels</li>
-                          <li>• Potential challenges for local water management</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <div 
-                      className="flex items-center justify-between cursor-pointer"
-                      onClick={() => toggleSection('wildlife')}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Fish className="h-5 w-5 text-blue-500" />
-                        <h3 className="font-medium">Wildlife Impact</h3>
-                      </div>
-                      {openSections.wildlife ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
+                    <div className="p-3 bg-blue-50 rounded-md border border-blue-100">
+                      <span className="text-sm font-medium text-blue-900">AI-Powered Analytics</span>
+                      <p className="mt-1 text-sm text-blue-700">Machine learning models for predictive analysis and trend identification</p>
                     </div>
-                    {openSections.wildlife && (
-                      <div className="pl-7 mt-4">
-                        <p className="text-sm text-slate-600 mb-3">
-                          Effects on Masuria's wildlife populations:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-600">
-                          <li>• Changes in fish spawning areas</li>
-                          <li>• Altered habitats for amphibians</li>
-                          <li>• Potential stress on protected species</li>
-                        </ul>
-                        <div className="mt-3">
-                          <span className="text-sm font-medium text-amber-600">Risk Level: Moderate</span>
-                        </div>
-                      </div>
-                    )}
+                    <div className="p-3 bg-blue-50 rounded-md border border-blue-100">
+                      <span className="text-sm font-medium text-blue-900">Impact Evaluation</span>
+                      <p className="mt-1 text-sm text-blue-700">Regular assessment of conservation efforts and adaptation strategies</p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -320,37 +235,6 @@ function Dashboard() {
           </div>
         </div>
       </div>
-
-      <footer className="mt-auto border-t bg-slate-50">
-        <div className="container py-8 px-4">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div>
-              <h3 className="font-medium mb-3">Data Sources</h3>
-              <ul className="text-sm space-y-2 text-slate-600">
-                <li>• Sentinel-2 Satellite Imagery</li>
-                <li>• Landsat Historical Data</li>
-                <li>• Google Earth Engine</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-medium mb-3">Analysis Tools</h3>
-              <ul className="text-sm space-y-2 text-slate-600">
-                <li>• Python (NumPy, OpenCV)</li>
-                <li>• Machine Learning Models</li>
-                <li>• Visualization Libraries</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-medium mb-3">Project Status</h3>
-              <ul className="text-sm space-y-2 text-slate-600">
-                <li>• Last Updated: August 2023</li>
-                <li>• Model Accuracy: 96%</li>
-                <li>• Continuous Monitoring Active</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </main>
   )
 }
